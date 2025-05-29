@@ -17,12 +17,21 @@ public class Entity implements Serializable {
     private float radius;
     private float time;
     private HashMap<String, StatService> Stats = new HashMap<>();
+    public boolean destroyed;
 
 
     public String getID() {
         return ID.toString();
     }
 
+
+    public boolean isDestroyed() {
+        return destroyed;
+    }
+
+    public void setDestroyed(boolean destroyed) {
+        this.destroyed = destroyed;
+    }
 
     public void setPolygonCoordinates(double... coordinates ) {
         this.polygonCoordinates = coordinates;

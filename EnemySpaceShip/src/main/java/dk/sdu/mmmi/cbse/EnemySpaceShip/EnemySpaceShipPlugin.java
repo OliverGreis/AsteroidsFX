@@ -42,6 +42,7 @@ public class EnemySpaceShipPlugin implements IGamePluginService {
         EnemyShip.setY((gameData.getDisplayWidth()/2)+20);
         EnemyShip.setRadius(8);
         EnemyShip.addStat(StatMap.get("HP"));
+        EnemyShip.addStat(StatMap.get("CD"));
 
 
         return EnemyShip;

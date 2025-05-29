@@ -50,7 +50,7 @@ public class CollisionDetector implements IPostEntityProcessingService {
                     }
 
                     if( EntityMap.contains("Bullet") && EntityMap.contains("Asteroid")){
-                        world.removeEntity(entities[EntityMap.indexOf("Asteroid")]);
+                        entities[EntityMap.indexOf("Asteroid")].setDestroyed(true);
                         world.removeEntity(entities[EntityMap.indexOf("Bullet")]);
                     }
 
