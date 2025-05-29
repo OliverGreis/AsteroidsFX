@@ -1,6 +1,9 @@
 package dk.sdu.mmmi.cbse.common.data;
 
+import dk.sdu.mmmi.cbse.common.services.Stats.StatService;
+
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.UUID;
 
 public class Entity implements Serializable {
@@ -13,6 +16,7 @@ public class Entity implements Serializable {
     private double rotation;
     private float radius;
     private float time;
+    private HashMap<String, StatService> Stats = new HashMap<>();
 
 
     public String getID() {
@@ -67,4 +71,15 @@ public class Entity implements Serializable {
     public float getCurrentTime() {return this.time;}
 
     public void addCurrentTime(float time) {this.time = this.time + time;}
+
+    public void addStat(StatService stat){
+        Stats.put(stat.getClass().getSimpleName(),stat);
+    }
+    public HashMap<String, StatService> getStats() {
+        return Stats;
+    }
+
+    public StatService getStat(String name) {
+        return Stats.get(name);
+    }
 }
