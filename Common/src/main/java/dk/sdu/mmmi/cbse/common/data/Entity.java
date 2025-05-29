@@ -12,7 +12,8 @@ public class Entity implements Serializable {
     private double y;
     private double rotation;
     private float radius;
-            
+    private float time;
+
 
     public String getID() {
         return ID.toString();
@@ -60,4 +61,10 @@ public class Entity implements Serializable {
     public float getRadius() {
         return this.radius;
     }
+
+    public void setCurrentTime(float time) {this.time = time;}
+
+    public float getCurrentTime() {return this.time;}
+
+    public void addCurrentTime(float time) {this.time = this.time + time;}
 }
