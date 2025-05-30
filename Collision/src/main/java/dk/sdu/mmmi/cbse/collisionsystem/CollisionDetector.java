@@ -15,16 +15,13 @@ public class CollisionDetector implements IPostEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
-        // two for loops for all entities in the world
         for (Entity entity1 : world.getEntities()) {
             for (Entity entity2 : world.getEntities()) {
 
-                // if the two entities are identical, skip the iteration
                 if (entity1.getID().equals(entity2.getID())) {
                     continue;                    
                 }
 
-                // CollisionDetection
                 if (this.collides(entity1, entity2)) {
                     String En1 = getEntityType(entity1);
                     String En2 = getEntityType(entity2);
@@ -86,6 +83,4 @@ public class CollisionDetector implements IPostEntityProcessingService {
         }
         return null;
     }
-
-
 }

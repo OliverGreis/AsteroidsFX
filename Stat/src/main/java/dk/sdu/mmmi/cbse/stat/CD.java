@@ -6,7 +6,6 @@ public class CD implements StatService {
     private int cd;
 
     public CD() {
-        this.cd = 5;
     }
 
     @Override
