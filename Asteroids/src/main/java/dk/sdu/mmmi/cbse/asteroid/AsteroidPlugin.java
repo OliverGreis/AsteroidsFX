@@ -5,7 +5,15 @@ import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
+import dk.sdu.mmmi.cbse.common.services.ScoringService;
+import dk.sdu.mmmi.cbse.common.services.Stats.StatService;
+
+import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
+import java.util.ServiceLoader;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  *
@@ -13,13 +21,13 @@ import java.util.Random;
  */
 public class AsteroidPlugin implements IGamePluginService {
 
+
     @Override
     public void start(GameData gameData, World world) {
         for(int i = 0; i <= 5; i++){
             Entity asteroid = createAsteroid(gameData);
             world.addEntity(asteroid);
         }
-
     }
 
     @Override
@@ -46,6 +54,7 @@ public class AsteroidPlugin implements IGamePluginService {
         asteroid.setY(rnd.nextInt(800));
         asteroid.setRadius(size);
         asteroid.setRotation(rnd.nextInt(90));
+        asteroid.setScore(100);
         return asteroid;
     }
 }

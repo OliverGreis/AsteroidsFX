@@ -7,5 +7,5 @@ import java.io.StreamCorruptedException;
 
 module Score {
     requires Common;
-    //provides ScoringService with dk.sdu.mmmi.cbse.score.ScoreProcessor;
+    provides ScoringService with dk.sdu.mmmi.cbse.score.ScoreProcessor;
 }

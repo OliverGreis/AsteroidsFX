@@ -13,7 +13,13 @@ import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 import java.util.List;
 import java.util.Map;
+import java.util.ServiceLoader;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import dk.sdu.mmmi.cbse.common.services.ScoringService;
+import dk.sdu.mmmi.cbse.common.util.ServiceLocator;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -23,6 +29,8 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  *
@@ -37,6 +45,7 @@ class Game {
     private final List<IGamePluginService> gamePluginServices;
     private final List<IEntityProcessingService> entityProcessingServiceList;
     private final List<IPostEntityProcessingService> postEntityProcessingServices;
+    private Text text;
 
     Game(List<IGamePluginService> gamePluginServices, List<IEntityProcessingService> entityProcessingServiceList, List<IPostEntityProcessingService> postEntityProcessingServices) {
         this.gamePluginServices = gamePluginServices;
@@ -45,7 +54,7 @@ class Game {
     }
 
     public void start(Stage window) throws Exception {
-        Text text = new Text(10, 20, "Destroyed asteroids: 0");
+        text = new Text(10, 20, "Destroyed asteroids: 0");
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         gameWindow.getChildren().add(text);
 
@@ -113,6 +122,7 @@ class Game {
         for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
             postEntityProcessorService.process(gameData, world);
         }
+        text.setText("Destroyed asteroids: " + ServiceLocator.INSTANCE.locateAll(ScoringService.class).get(0).getScore());
     }
 
     private void draw() {
@@ -122,6 +132,8 @@ class Game {
                 polygons.remove(polygonEntity);
                 gameWindow.getChildren().remove(removedPolygon);
             }
+
+
         }
 
         for (Entity entity : world.getEntities()) {
@@ -148,6 +160,11 @@ class Game {
 
     public List<IPostEntityProcessingService> getPostEntityProcessingServices() {
         return postEntityProcessingServices;
+    }
+
+    public static List<ScoringService> loadScore() {
+        ServiceLoader<ScoringService> loader = ServiceLoader.load(ScoringService.class);
+        return StreamSupport.stream(loader.spliterator(), false).collect(Collectors.toList());
     }
 
 }

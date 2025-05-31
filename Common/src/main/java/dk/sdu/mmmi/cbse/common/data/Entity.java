@@ -18,7 +18,7 @@ public class Entity implements Serializable {
     private float time;
     private HashMap<String, StatService> Stats = new HashMap<>();
     public boolean destroyed;
-
+    private int score;
 
     public String getID() {
         return ID.toString();
@@ -90,5 +90,13 @@ public class Entity implements Serializable {
 
     public StatService getStat(String name) {
         return Stats.get(name);
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

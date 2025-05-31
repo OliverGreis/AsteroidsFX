@@ -4,12 +4,18 @@ import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
+import dk.sdu.mmmi.cbse.common.services.ScoringService;
+import dk.sdu.mmmi.cbse.common.services.Stats.StatService;
+import dk.sdu.mmmi.cbse.common.util.ServiceLocator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.ServiceLoader;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class CollisionDetector implements IPostEntityProcessingService {
-
     public CollisionDetector() {
     }
 
@@ -29,8 +35,6 @@ public class CollisionDetector implements IPostEntityProcessingService {
                     List<String> EntityMap = new ArrayList<>();
                     EntityMap.add(En1);
                     EntityMap.add(En2);
-                    System.out.println(EntityMap);
-                    System.out.println(entities.toString());
                     if(EntityMap.contains("Player") && EntityMap.contains("Bullet")){
                         entities[EntityMap.indexOf("Player")].getStat("HP").SubtractStat(1);
                         world.removeEntity(entities[EntityMap.indexOf("Bullet")]);
@@ -48,6 +52,7 @@ public class CollisionDetector implements IPostEntityProcessingService {
 
                     if( EntityMap.contains("Bullet") && EntityMap.contains("Asteroid")){
                         entities[EntityMap.indexOf("Asteroid")].setDestroyed(true);
+                        ServiceLocator.INSTANCE.locateAll(ScoringService.class).get(0).addScore(100);
                         world.removeEntity(entities[EntityMap.indexOf("Bullet")]);
                     }
 
@@ -83,4 +88,5 @@ public class CollisionDetector implements IPostEntityProcessingService {
         }
         return null;
     }
+
 }

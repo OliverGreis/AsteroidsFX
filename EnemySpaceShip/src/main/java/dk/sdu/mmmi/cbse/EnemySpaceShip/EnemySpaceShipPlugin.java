@@ -4,6 +4,7 @@ import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
+import dk.sdu.mmmi.cbse.common.services.ScoringService;
 import dk.sdu.mmmi.cbse.common.services.Stats.StatService;
 
 import java.util.HashMap;
@@ -17,7 +18,6 @@ public class EnemySpaceShipPlugin implements IGamePluginService {
     private HashMap<String, StatService> StatMap = new HashMap<>();
     private Entity enemy;
     List<StatService> StatServices = loadStats();
-
 
     public EnemySpaceShipPlugin() {
         for (StatService service : StatServices) {
