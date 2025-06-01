@@ -3,6 +3,7 @@ import dk.sdu.mmmi.cbse.common.services.ScoringService;
 
 module Collision {
     requires Common;
-    provides IPostEntityProcessingService with dk.sdu.mmmi.cbse.collisionsystem.CollisionDetector;
-    uses ScoringService;
+    requires spring.beans;
+    requires spring.context;
+    exports dk.sdu.mmmi.cbse.collisionsystem;
 }

@@ -29,13 +29,11 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Component;
 
 import static java.util.stream.Collectors.toList;
 
-/**
- *
- * @author jcs
- */
+@Component
 class Game {
 
     private final GameData gameData = new GameData();
@@ -45,12 +43,14 @@ class Game {
     private final List<IGamePluginService> gamePluginServices;
     private final List<IEntityProcessingService> entityProcessingServiceList;
     private final List<IPostEntityProcessingService> postEntityProcessingServices;
+    private final ScoringService scoringService;
     private Text text;
 
-    Game(List<IGamePluginService> gamePluginServices, List<IEntityProcessingService> entityProcessingServiceList, List<IPostEntityProcessingService> postEntityProcessingServices) {
+    Game(List<IGamePluginService> gamePluginServices, List<IEntityProcessingService> entityProcessingServiceList, List<IPostEntityProcessingService> postEntityProcessingServices, ScoringService scoringService) {
         this.gamePluginServices = gamePluginServices;
         this.entityProcessingServiceList = entityProcessingServiceList;
         this.postEntityProcessingServices = postEntityProcessingServices;
+        this.scoringService = scoringService;
     }
 
     public void start(Stage window) throws Exception {
@@ -122,7 +122,7 @@ class Game {
         for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
             postEntityProcessorService.process(gameData, world);
         }
-        text.setText("Destroyed asteroids: " + ServiceLocator.INSTANCE.locateAll(ScoringService.class).get(0).getScore());
+        text.setText("Destroyed asteroids: " + getScoringServices().getScore());
     }
 
     private void draw() {
@@ -162,9 +162,8 @@ class Game {
         return postEntityProcessingServices;
     }
 
-    public static List<ScoringService> loadScore() {
-        ServiceLoader<ScoringService> loader = ServiceLoader.load(ScoringService.class);
-        return StreamSupport.stream(loader.spliterator(), false).collect(Collectors.toList());
+    public ScoringService getScoringServices() {
+        return scoringService;
     }
 
 }

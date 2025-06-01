@@ -4,7 +4,6 @@ public class GameData {
 
     private int displayWidth  = 800 ;
     private int displayHeight = 800;
-    private String ScoreText;
     private final GameKeys keys = new GameKeys();
 
 
@@ -28,11 +27,4 @@ public class GameData {
         return displayHeight;
     }
 
-    public String getScoreText() {
-        return ScoreText;
-    }
-
-    public void setScoreText(String scoreText) {
-        ScoreText = scoreText;
-    }
 }

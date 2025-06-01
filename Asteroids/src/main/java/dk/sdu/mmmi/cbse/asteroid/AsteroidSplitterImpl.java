@@ -4,6 +4,8 @@ import dk.sdu.mmmi.cbse.common.asteroids.Asteroid;
 import dk.sdu.mmmi.cbse.common.asteroids.IAsteroidSplitter;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.World;
+import dk.sdu.mmmi.cbse.common.services.ScoringService;
+import dk.sdu.mmmi.cbse.common.util.ServiceLocator;
 
 /**
  *
@@ -13,6 +15,7 @@ public class AsteroidSplitterImpl implements IAsteroidSplitter {
 
     @Override
     public void createSplitAsteroid(Entity e, World world) {
+
         if(e.getPolygonCoordinates()[0] <= 5){
             world.removeEntity(e);
 

@@ -54,6 +54,11 @@
             <artifactId>spring-context</artifactId>
         </dependency>
         <dependency>
+            <groupId>dk.sdu.mmmi.cbse</groupId>
+            <artifactId>collision</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
         </dependency>

@@ -7,25 +7,32 @@ import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.ScoringService;
 import dk.sdu.mmmi.cbse.common.services.Stats.StatService;
 import dk.sdu.mmmi.cbse.common.util.ServiceLocator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ServiceLoader;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
+@Component
 public class CollisionDetector implements IPostEntityProcessingService {
-    public CollisionDetector() {
+    private final ScoringService scoringService;
+
+    @Autowired
+    public CollisionDetector(ScoringService scoringService) {
+        this.scoringService = scoringService;
+        System.out.println("ScoringService created");
     }
+
 
     @Override
     public void process(GameData gameData, World world) {
+
         for (Entity entity1 : world.getEntities()) {
             for (Entity entity2 : world.getEntities()) {
 
                 if (entity1.getID().equals(entity2.getID())) {
-                    continue;                    
+                    continue;
                 }
 
                 if (this.collides(entity1, entity2)) {
@@ -51,8 +58,8 @@ public class CollisionDetector implements IPostEntityProcessingService {
                     }
 
                     if( EntityMap.contains("Bullet") && EntityMap.contains("Asteroid")){
+                        scoringService.addScore(entities[EntityMap.indexOf("Asteroid")].getScore());
                         entities[EntityMap.indexOf("Asteroid")].setDestroyed(true);
-                        ServiceLocator.INSTANCE.locateAll(ScoringService.class).get(0).addScore(100);
                         world.removeEntity(entities[EntityMap.indexOf("Bullet")]);
                     }
 
