@@ -22,6 +22,9 @@
         <module>EnemySpaceShip</module>
         <module>Stat</module>
         <module>Score</module>
+        <module>ScoreMicroService</module>
+
+
     </modules>
     <properties>
         <java>java</java>

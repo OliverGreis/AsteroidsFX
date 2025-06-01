@@ -48,12 +48,15 @@ public class EnemySpaceShipControlSystem implements IEntityProcessingService {
 
             }
 
+                if(enemy.getStat("CD") != null){
+                    if(enemy.getStat("CD").getStat() == 0){
+                        getBulletSPIs().stream().findFirst().ifPresent(
+                                spi -> {world.addEntity(spi.createBullet(enemy, gameData));}
+                        );
+                    }
+                }
 
-                if(enemy.getStat("CD").getStat() == 0){
-                getBulletSPIs().stream().findFirst().ifPresent(
-                        spi -> {world.addEntity(spi.createBullet(enemy, gameData));}
-                );
-            }
+
                 if(enemy.getCurrentTime() == 360){
                     enemy.setRotation(Math.random()*360);
                     enemy.setCurrentTime(0);
