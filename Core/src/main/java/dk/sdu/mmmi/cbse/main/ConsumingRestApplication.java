@@ -1,4 +1,5 @@
-package dk.sdu.mmmi.cbse.collisionsystem;
+package dk.sdu.mmmi.cbse.main;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -11,19 +12,16 @@ import org.springframework.web.client.RestTemplate;
 
 
 @SpringBootApplication
-public class getRestApplication {
+public class ConsumingRestApplication {
 
-    private static final Logger log = LoggerFactory.getLogger(getRestApplication.class);
+    private static final Logger log = LoggerFactory.getLogger(ConsumingRestApplication.class);
 
     public static void main(String[] args) {
-        SpringApplication.run(getRestApplication.class, args);
+        SpringApplication.run(ConsumingRestApplication.class, args);
     }
 
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
         return builder.build();
     }
-
-
-
 }
